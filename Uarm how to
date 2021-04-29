@@ -1,0 +1,94 @@
+U-arm How To
+
+Software needed and how to install and use each - Paulos 
+	The Uarm Swift Pro comes with many software packages that all allow the Uarm different functionality. This section will go over the different types of softwares we utilized in our time with the Uarm swift Pro and how we installed each of them. 
+	The first software package that we got our hands on was the Uarm Studio application. This application offered a lot of basic functionality for the arm such as the ability to do laser engravings with the laser attachment, drawings while holding a pen or pencil and lastly it offers remote control through the app. This can be explored without the Uarm, and can be used by plugging in the Uarm to the laptop’s usb port. The download process is very easy, as you simply traverse to this link (https://www.ufactory.cc/pages/download-uarm) on the factory website and simply download the version that works with your operating system. We dive into how to get laser engraving and drawing working in later examples. As you may have noticed the link above also provides a download for the CuraforUarm application. This application provides the 3D printing functionality to the Uarm and we describe our steps in detail, despite not getting the 3d printing to work properly, later. If you scroll down to the “Document” section, you will find the majority of the documentation that we used for the Uarm, mostly the “Uarm Swift Pro User Manual” and the “Vision Camera Kit User Manual.” Keep in mind that there are older versions of these documents online, so make sure to not mix up which version to follow.
+	Next we have the OpenMV IDE. Throughout our use of the Uarm we found that the visual camera kit comes with a OpenMV camera and in order for proper use of the OpenMV camera we have to specifically use the OpenMV IDE. Thus the OpenMV IDE can be downloaded here from the OpenMV website. We will specifically go over the examples we used the OpenMV camera for later on. 
+	Lastly, we will discuss the use of python in the arm control of the Uarm. Similar to the Uarm Studio software, we are able to get the Uarm to move based on python commands, and while we will go over a specific example of using python to maneuver the trashcan later on, right now we will focus on the setup in order to enable arm control through python. The first step is to ensure you have at least python version 2.7 installed on your windows/linux device. Then you follow the steps listed in this github page  and installed the setup.py file they have on the page. You should then be able to run the commands and examples listed on the github page. The github page lists numerous commands of which we will touch on when describing the example we ran with python commands.
+
+Python - trashcan example - Paulos
+
+OpenMV examples
+There are a lot of great examples to look over that comes with the OpenMV Camera, which can be found by going to file → examples. The ones that the team determined to be relevant, as well as the new files we wrote, can be found here https://github.com/UMD-AIMAR/OpenMV
+
+To run files, plug the openmv camera into the usb port, then click the connect button then play button, both in the bottom left corner. You can adjust the camera zoom on the camera itself and using the image displayed in the top right corner. There are numerous potential uses of this kind of software.
+
+The first use we investigated was face recognition, so that AIMAR could allow a patient to log in or authorize use of something using their face. The software searches for a face, then when it finds a face it extracts the keypoints. Then it continues to search for a face and see if those keypoints match it. We found that “len(kpts2)” is the size, which should be high when the number of matched keypoints is high, meaning that it is likely the same face, and that “c[7]” should be low. Eventually, we used a tablet camera for facial recognition, rather than the OpenMV.
+
+A second use is the color tracking example, which tracks the location of an object of a specified color (which can be edited). “int(blob.cx())//2” is the x value of the object being tracked. The Face Authenticated Color Control example below demonstrates a combination of these two things. Color tracking could be useful for the Uarm to identify objects to pick up.
+
+A similar use is the feature detection, which works similarly. It identifies a shape and tracks its location. So for the Uarm to identify an object to pick up, the object could potentially have a shape on it to distinguish between perhaps different types of medicine containers.
+
+Face Authenticated Color Control Example
+This example was run as a project for the ENME351 Electronics II final project. A video of it can be found here: https://www.youtube.com/watch?v=D82RCrmWWV8
+
+**When I am demonstrating with the green marker the processing had crashed which is why the screen is stuck and not instead displaying "can't tell if this is you!"**
+
+The OpenMV Camera extracts the first face's keypoints and matches all other faces it detects with that first face. If it is likely the same face,  a range which I set as "size" greater than 70, then it runs the color tracking example, which tracks an object that is green-ish. This object's x value is converted to servo control (demonstrated on the lego car) and to processing display as a green circle moving left and right. The green LED is lit and processing displays "Same face detected!" If a face does not match the first one, it does not run the color tracking, therefore only allowing the first person control.
+
+In the context of AIMAR, this 351 project could be used for the robot to know which person it is talking to and only authorize certain activities if it sees that person, turn off if it does not detect a face, and control a motor (or another form of actuation) based on what it sees, which could be used to have the robot follow a face or use an object to control something remotely.
+
+My code is compiled in this pdf: https://drive.google.com/file/d/1aQPe…
+As well as in our github here:https://github.com/UMD-AIMAR/Color-Tracking-Example/tree/main
+
+The original sources of the code can be found here:
+
+OpenMV Cam: 
+Single color code tracking example: https://github.com/openmv/openmv/blob...
+
+Face tracking example:
+https://github.com/openmv/openmv/blob...
+
+In terms of how I set everything up:
+Breadboard wiring::
+two digital pins output: same face (green!), different face (red!)
+analog pin outputs x value of green object
+
+Arduino Uno:
+converts camera values to LED lights, processing, and servo motor
+
+Processing 3:
+displays "same face detected" or "can't tell if this is the same face"
+
+Sunfounder Servo 55g motor: http://wiki.sunfounder.cc/index.php?t...
+rotates -90 to 90 degrees, based on the x value of the moving green object
+
+Laser Engraving and Drawing examples
+Laser Engraving and Drawing are both run under Uarm Studio within the Draw/Laser application. After downloading Uarm Studio via the link above, connect the Uarm to the laptop via USB (in the image below it should say the arm is Connected when the Uarm is plugged in).
+
+Then, select whether you would like the picture to be outlined or filled in. 
+
+Then, you can either drag and adjust an existing pattern,
+
+Or import your own, both of which can be saved. The images we made ourselves were done on an iPad drawing app, Goodnotes, and exported without the background. For the Dr. Deane picture, we downloaded a photo of him, traced over it, then deleted the picture to export only the drawing.
+
+When you hit the play button, you can select either write/draw or laser. For both, you should adjust the zero point and desired speed.
+
+For writing and drawing, your zero point will be where your writing utensil touches the page with enough force to write, and speed will influence how quickly it is drawn. The speed influences how dark it may be written based on how the utensil deposits ink, as well as how the software chooses to draw the picture.
+
+
+Using the gripper rather than the universal holder, drawing with a pen did not turn out very accurately with this simple picture, the AIMAR M seen above. Using the universal holder would probably provide the stability needed to accurately draw, which the  team didn’t feel was necessary to test out.
+  
+Using the gripper for these more complex images, given enough time the software chooses instead of draw like we typically imagine, to draw it using dots, lifting up and down in rows from the bottom of the picture to the top.
+ 
+
+
+
+For the laser engraving, the zero point should be adjusted by turning the laser on and seeing at what distance and tightness combination is best for marking the material being engraved upon. It is important to be very careful when tightening the laser so as to not burn your finger. The smaller the laser appears, the stronger it is. You should try to reach a good balance between adequately marking the material but not burning it too much to go all the way through.
+
+This was the image we used for laser engraving.
+It took a few tries to get the right balance of laser tightness and distance, but eventually we got to this:
+
+
+3D printing example
+3D printing is done using CuraforUarm, but instructions for installing the extruder are in the Uarm User Manual. 
+
+Once the extruder is set up, import a CAD model then go to extensions and click on the uarm Swift Pro printer monitor. Then the extruder will heat up, and starting extruding PLA once it has. However, when we ran this, it did not properly push out the PLA as it went along. It did properly heat up and properly move around, so the likely issue with either with the physical tubes or with the electrical connection between the back of the Uarm’s 3OP Base Extension 
+
+
+Color Code example - Paulos 
+	The color code example is the basic camera vision kit example that Ufactory 
+Controller
+Openmv camera
+Uarm
+X loader
