@@ -1,9 +1,11 @@
-U-arm How To
+U-arm How To:
+
+(for the document with pictures, see here https://docs.google.com/document/d/1nLnjW-WwqBMz6RlxzHTPAPMKNusWprZ6lAuOPG39ZOM/edit?usp=sharing)
 
 Software needed and how to install and use each - Paulos 
 	The Uarm Swift Pro comes with many software packages that all allow the Uarm different functionality. This section will go over the different types of softwares we utilized in our time with the Uarm swift Pro and how we installed each of them. 
 	The first software package that we got our hands on was the Uarm Studio application. This application offered a lot of basic functionality for the arm such as the ability to do laser engravings with the laser attachment, drawings while holding a pen or pencil and lastly it offers remote control through the app. This can be explored without the Uarm, and can be used by plugging in the Uarm to the laptop’s usb port. The download process is very easy, as you simply traverse to this link (https://www.ufactory.cc/pages/download-uarm) on the factory website and simply download the version that works with your operating system. We dive into how to get laser engraving and drawing working in later examples. As you may have noticed the link above also provides a download for the CuraforUarm application. This application provides the 3D printing functionality to the Uarm and we describe our steps in detail, despite not getting the 3d printing to work properly, later. If you scroll down to the “Document” section, you will find the majority of the documentation that we used for the Uarm, mostly the “Uarm Swift Pro User Manual” and the “Vision Camera Kit User Manual.” Keep in mind that there are older versions of these documents online, so make sure to not mix up which version to follow.
-	Next we have the OpenMV IDE. Throughout our use of the Uarm we found that the visual camera kit comes with a OpenMV camera and in order for proper use of the OpenMV camera we have to specifically use the OpenMV IDE. Thus the OpenMV IDE can be downloaded here from the OpenMV website. We will specifically go over the examples we used the OpenMV camera for later on. 
+	Next we have the OpenMV IDE. Throughout our use of the Uarm we found that the visual camera kit comes with a OpenMV camera and in order for proper use of the OpenMV camera we have to specifically use the OpenMV IDE. Thus the OpenMV IDE can be downloaded here (https://openmv.io/pages/download) from the OpenMV website. We will specifically go over the examples we used the OpenMV camera for later on. 
 	Lastly, we will discuss the use of python in the arm control of the Uarm. Similar to the Uarm Studio software, we are able to get the Uarm to move based on python commands, and while we will go over a specific example of using python to maneuver the trashcan later on, right now we will focus on the setup in order to enable arm control through python. The first step is to ensure you have at least python version 2.7 installed on your windows/linux device. Then you follow the steps listed in this github page  and installed the setup.py file they have on the page. You should then be able to run the commands and examples listed on the github page. The github page lists numerous commands of which we will touch on when describing the example we ran with python commands.
 
 Python - trashcan example - Paulos
@@ -28,8 +30,7 @@ The OpenMV Camera extracts the first face's keypoints and matches all other face
 
 In the context of AIMAR, this 351 project could be used for the robot to know which person it is talking to and only authorize certain activities if it sees that person, turn off if it does not detect a face, and control a motor (or another form of actuation) based on what it sees, which could be used to have the robot follow a face or use an object to control something remotely.
 
-My code is compiled in this pdf: https://drive.google.com/file/d/1aQPe…
-As well as in our github here:https://github.com/UMD-AIMAR/Color-Tracking-Example/tree/main
+My code is compiled here here: https://github.com/UMD-AIMAR/Color-Tracking-Example/tree/main and as a pdf https://drive.google.com/file/d/1aQPeSDEtTxFucvDEAONpV6jitb8MErRC/view
 
 The original sources of the code can be found here:
 
@@ -50,7 +51,7 @@ converts camera values to LED lights, processing, and servo motor
 Processing 3:
 displays "same face detected" or "can't tell if this is the same face"
 
-Sunfounder Servo 55g motor: http://wiki.sunfounder.cc/index.php?t...
+Sunfounder Servo 55g motor: http://wiki.sunfounder.cc/index.php?title=55g_Metal_Gear_Servo
 rotates -90 to 90 degrees, based on the x value of the moving green object
 
 Laser Engraving and Drawing examples
